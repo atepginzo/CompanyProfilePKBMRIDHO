@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Website Company Profile + CMS Admin
 
-## Getting Started
+Project Next.js full-stack untuk website profil institusi pendidikan dan panel CMS admin.
 
-First, run the development server:
+## Tech Stack
+
+- Next.js App Router
+- Prisma ORM + PostgreSQL
+- JWT auth (cookie httpOnly)
+- CSS design system + CSS Modules
+
+## Setup Lokal
+
+1. Install dependency
+
+```bash
+npm install
+```
+
+2. Siapkan environment
+
+```bash
+copy .env.example .env
+```
+
+3. Generate Prisma Client
+
+```bash
+npm run db:generate
+```
+
+4. Jalankan migration
+
+```bash
+npm run db:migrate
+```
+
+5. Seed data awal
+
+```bash
+npm run db:seed
+```
+
+6. Jalankan aplikasi
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Kredensial Admin Seed
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Username: `admin`
+- Password: `admin123`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Segera ganti kredensial ini setelah environment pertama selesai.
 
-## Learn More
+## Status Implementasi
 
-To learn more about Next.js, take a look at the following resources:
+Sudah tersedia:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Fondasi auth admin: login, logout, me, helper JWT, middleware auth
+- Layout admin: sidebar, header, toast, context auth
+- Dashboard admin + API agregasi statistik
+- Reusable admin CRUD components:
+	- `CrudListPage`, `CrudFormPage`
+	- `DataTable`, `SearchFilter`, `StatusBadge`
+	- `FormInput`, `FormTextarea`, `FormSelect`, `FormFileUpload`, `RichTextEditor`
+	- `ConfirmDialog`, `EmptyState`, `LoadingSkeleton`
+- Modul admin dengan CRUD (list/create/edit):
+	- Berita
+	- Galeri
+	- Pengumuman
+	- Kalender
+	- Dosen
+	- Dokumen
+	- Struktur
+	- Fasilitas
+	- Alumni
+	- Pesan (list + aksi baca/hapus)
+	- Pengaturan situs
+- Public API endpoints untuk beranda dan halaman publik utama
+- Halaman publik utama (beranda, profil, program, pendaftaran, berita, galeri, pengumuman, kalender, kontak, dll)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Catatan penting saat ini:
 
-## Deploy on Vercel
+- Auth route saat ini memiliki fallback mock login `admin/admin123` ketika DB user belum dipakai penuh.
+- Upload file tersedia lewat `POST /api/admin/upload` dan juga upload per-modul sesuai route masing-masing.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Endpoint Utama
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Auth:
+
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
+
+Admin:
+
+- `GET /api/admin/dashboard`
+- `CRUD /api/admin/berita`
+- `CRUD /api/admin/galeri`
+- `CRUD /api/admin/pengumuman`
+- `CRUD /api/admin/kalender`
+- `CRUD /api/admin/dosen`
+- `CRUD /api/admin/alumni`
+- `CRUD /api/admin/struktur`
+- `CRUD /api/admin/fasilitas`
+- `CRUD /api/admin/dokumen`
+- `GET /api/admin/pesan`, `PATCH /api/admin/pesan/[id]`, `DELETE /api/admin/pesan/[id]`
+- `GET/PUT /api/admin/pengaturan`
+
+## Catatan Tambahan
+
+- Pastikan `DATABASE_URL` valid sebelum menjalankan migration/seed.
+- Prisma client output diarahkan ke `src/generated/prisma`.

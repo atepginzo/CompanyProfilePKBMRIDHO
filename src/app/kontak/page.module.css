@@ -1,0 +1,240 @@
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+}
+
+.hero {
+  background:
+    linear-gradient(145deg, rgba(7, 27, 41, 0.82) 0%, rgba(9, 56, 83, 0.64) 50%, rgba(9, 92, 101, 0.8) 100%),
+    url('/images/dummy/musik.png');
+  background-size: cover;
+  background-position: center;
+  color: #E0F2FE;
+  border-radius: 24px;
+  padding: clamp(10px, 2vw, 24px) clamp(24px, 4vw, 44px) clamp(28px, 4.8vw, 50px);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 84% 16%, rgba(56, 189, 248, 0.18), transparent 42%),
+    radial-gradient(circle at 12% 84%, rgba(14, 165, 233, 0.16), transparent 40%);
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #BAE6FD;
+  position: relative;
+}
+
+.hero h1 {
+  margin-top: 8px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1.1;
+  text-shadow: 0 10px 24px rgba(4, 14, 24, 0.55);
+  position: relative;
+}
+
+.hero > p:last-child {
+  font-size: clamp(14px, 2vw, 17px);
+  color: #dbeafe;
+  max-width: 560px;
+  margin-top: 8px;
+  text-shadow: 0 5px 14px rgba(4, 14, 24, 0.45);
+  position: relative;
+}
+
+/* WhatsApp */
+.waSection {
+  margin-top: 24px;
+}
+
+.waCard {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 28px;
+  background: linear-gradient(135deg, #DCFCE7, #F0FDF4);
+  border: 2px solid #86EFAC;
+  border-radius: var(--radius-xl);
+}
+
+.waIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: #25D366;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.waContent { flex: 1; }
+.waContent h2 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: #166534;
+  margin-bottom: 4px;
+}
+.waContent p {
+  font-size: var(--text-sm);
+  color: #15803D;
+  line-height: 1.5;
+}
+
+.waBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background: #25D366;
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all .2s;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+.waBtn:hover {
+  background: #1DA851;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+  color: #fff;
+}
+
+/* Grid */
+.grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+}
+
+.infoCard,
+.formCard {
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.06);
+  padding: 24px;
+}
+
+.infoCard h2, .formCard h2 {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 16px;
+}
+
+.infoCard ul {
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+
+.infoCard li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.contactIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.infoCard li div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.infoCard strong {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.infoCard span {
+  font-size: var(--text-sm);
+  color: #475569;
+}
+
+.formCard {
+  display: grid;
+  gap: 14px;
+}
+
+.formCard label {
+  display: grid;
+  gap: 6px;
+  color: #334155;
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.formCard input,
+.formCard textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.formCard input:focus,
+.formCard textarea:focus {
+  border-color: #0EA5E9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+}
+
+.feedback {
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .waCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

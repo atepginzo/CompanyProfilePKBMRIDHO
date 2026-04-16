@@ -1,0 +1,69 @@
+.page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+
+.backLink {
+  display: inline-flex;
+  margin-bottom: 14px;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.header {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: clamp(18px, 4vw, 28px);
+  box-shadow: 0 6px 22px rgba(15, 23, 42, 0.08);
+}
+
+.category {
+  color: #1d4ed8;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.header h1 {
+  margin-top: 10px;
+  font-size: clamp(28px, 5vw, 46px);
+  line-height: 1.1;
+}
+
+.meta {
+  margin-top: 12px;
+  color: #64748b;
+}
+
+.heroImage {
+  margin-top: 16px;
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+}
+
+.caption {
+  margin: 16px 0 20px;
+  color: #334155;
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+.loading,
+.errorWrap {
+  max-width: 760px;
+  margin: 28px auto;
+  padding: 26px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.errorWrap p {
+  margin: 10px 0 18px;
+  color: #64748b;
+}

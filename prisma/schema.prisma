@@ -1,0 +1,276 @@
+// Prisma Schema - Website Company Profile Institusi
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== USERS ====================
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique @db.VarChar(50)
+  passwordHash String    @map("password_hash") @db.VarChar(255)
+  namaLengkap  String    @map("nama_lengkap") @db.VarChar(255)
+  email        String?   @unique @db.VarChar(255)
+  avatar       String?   @db.VarChar(500)
+  lastLogin    DateTime? @map("last_login")
+  isActive     Boolean   @default(true) @map("is_active")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  berita       Berita[]
+  galeri       Galeri[]
+  pengumuman   Pengumuman[]
+  kalenderEvent KalenderEvent[]
+  dokumen      Dokumen[]
+
+  @@map("users")
+}
+
+// ==================== KATEGORI BERITA ====================
+model KategoriBerita {
+  id        Int      @id @default(autoincrement())
+  nama      String   @unique @db.VarChar(100)
+  slug      String   @unique @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  berita    Berita[]
+
+  @@map("kategori_berita")
+}
+
+// ==================== BERITA ====================
+model Berita {
+  id                Int       @id @default(autoincrement())
+  judul             String    @db.VarChar(255)
+  slug              String    @unique @db.VarChar(255)
+  ringkasan         String    @db.Text
+  konten            String    @db.Text
+  thumbnail         String?   @db.VarChar(500)
+  kategoriId        Int       @map("kategori_id")
+  penulis           String?   @db.VarChar(100)
+  status            String    @default("draft") @db.VarChar(20)
+  tanggalPublikasi  DateTime? @map("tanggal_publikasi")
+  viewsCount        Int       @default(0) @map("views_count")
+  createdBy         Int       @map("created_by")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  kategori          KategoriBerita @relation(fields: [kategoriId], references: [id])
+  creator           User           @relation(fields: [createdBy], references: [id])
+
+  @@index([slug])
+  @@index([status])
+  @@index([kategoriId])
+  @@map("berita")
+}
+
+// ==================== DOSEN ====================
+model Dosen {
+  id                  Int      @id @default(autoincrement())
+  namaLengkap         String   @map("nama_lengkap") @db.VarChar(255)
+  nip                 String?  @unique @db.VarChar(30)
+  nidn                String?  @unique @db.VarChar(20)
+  jabatanFungsional   String?  @map("jabatan_fungsional") @db.VarChar(100)
+  jabatanStruktural   String?  @map("jabatan_struktural") @db.VarChar(100)
+  programStudi        String?  @map("program_studi") @db.VarChar(100)
+  pendidikanTerakhir  String?  @map("pendidikan_terakhir") @db.VarChar(200)
+  bidangKeahlian      String?  @map("bidang_keahlian") @db.Text
+  email               String?  @db.VarChar(255)
+  telepon             String?  @db.VarChar(20)
+  foto                String?  @db.VarChar(500)
+  bio                 String?  @db.Text
+  urutan              Int      @default(0)
+  status              String   @default("aktif") @db.VarChar(20)
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("dosen")
+}
+
+// ==================== KATEGORI GALERI ====================
+model KategoriGaleri {
+  id        Int      @id @default(autoincrement())
+  nama      String   @unique @db.VarChar(100)
+  slug      String   @unique @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  galeri    Galeri[]
+
+  @@map("kategori_galeri")
+}
+
+// ==================== GALERI ====================
+model Galeri {
+  id               Int       @id @default(autoincrement())
+  judulFoto        String    @map("judul_foto") @db.VarChar(255)
+  slug             String    @unique @db.VarChar(255)
+  keterangan       String?   @db.Text
+  kategoriId       Int       @map("kategori_id")
+  linkGdrive       String?   @map("link_gdrive") @db.VarChar(500)
+  foto             String    @db.VarChar(500)
+  tanggalKegiatan  DateTime? @map("tanggal_kegiatan") @db.Date
+  status           String    @default("draft") @db.VarChar(20)
+  createdBy        Int       @map("created_by")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+
+  kategori         KategoriGaleri @relation(fields: [kategoriId], references: [id])
+  creator          User           @relation(fields: [createdBy], references: [id])
+
+  @@index([slug])
+  @@index([status])
+  @@index([kategoriId])
+  @@map("galeri")
+}
+
+// ==================== PENGUMUMAN ====================
+model Pengumuman {
+  id                    Int       @id @default(autoincrement())
+  judul                 String    @db.VarChar(255)
+  slug                  String    @unique @db.VarChar(255)
+  konten                String    @db.Text
+  prioritas             String    @default("normal") @db.VarChar(20)
+  lampiran              String?   @db.VarChar(500)
+  tanggalBerlakuMulai   DateTime? @map("tanggal_berlaku_mulai") @db.Date
+  tanggalBerlakuSelesai DateTime? @map("tanggal_berlaku_selesai") @db.Date
+  status                String    @default("draft") @db.VarChar(20)
+  createdBy             Int       @map("created_by")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+
+  creator               User     @relation(fields: [createdBy], references: [id])
+
+  @@index([slug])
+  @@index([status])
+  @@map("pengumuman")
+}
+
+// ==================== KALENDER EVENT ====================
+model KalenderEvent {
+  id             Int       @id @default(autoincrement())
+  judulEvent     String    @map("judul_event") @db.VarChar(255)
+  deskripsi      String?   @db.Text
+  tanggalMulai   DateTime  @map("tanggal_mulai")
+  tanggalSelesai DateTime? @map("tanggal_selesai")
+  lokasi         String?   @db.VarChar(255)
+  jenisEvent     String    @default("umum") @map("jenis_event") @db.VarChar(20)
+  warnaLabel     String?   @map("warna_label") @db.VarChar(7)
+  status         String    @default("draft") @db.VarChar(20)
+  createdBy      Int       @map("created_by")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  creator        User     @relation(fields: [createdBy], references: [id])
+
+  @@index([status])
+  @@map("kalender_event")
+}
+
+// ==================== ALUMNI ====================
+model Alumni {
+  id               Int      @id @default(autoincrement())
+  nama             String   @db.VarChar(255)
+  angkatan         String   @db.VarChar(4)
+  programStudi     String?  @map("program_studi") @db.VarChar(100)
+  tahunLulus       String?  @map("tahun_lulus") @db.VarChar(4)
+  pekerjaanSaatIni String?  @map("pekerjaan_saat_ini") @db.VarChar(255)
+  perusahaan       String?  @db.VarChar(255)
+  testimoni        String?  @db.Text
+  foto             String?  @db.VarChar(500)
+  isFeatured       Boolean  @default(false) @map("is_featured")
+  status           String   @default("aktif") @db.VarChar(20)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("alumni")
+}
+
+// ==================== STRUKTUR ORGANISASI ====================
+model StrukturOrganisasi {
+  id           Int      @id @default(autoincrement())
+  namaPejabat  String   @map("nama_pejabat") @db.VarChar(255)
+  jabatan      String   @db.VarChar(255)
+  foto         String?  @db.VarChar(500)
+  level        Int
+  parentId     Int?     @map("parent_id")
+  urutan       Int      @default(0)
+  periode      String?  @db.VarChar(50)
+  status       String   @default("aktif") @db.VarChar(20)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  parent       StrukturOrganisasi?  @relation("OrgHierarchy", fields: [parentId], references: [id])
+  children     StrukturOrganisasi[] @relation("OrgHierarchy")
+
+  @@map("struktur_organisasi")
+}
+
+// ==================== FASILITAS ====================
+model Fasilitas {
+  id             Int      @id @default(autoincrement())
+  namaFasilitas  String   @map("nama_fasilitas") @db.VarChar(255)
+  deskripsi      String?  @db.Text
+  foto           String?  @db.VarChar(500)
+  kategori       String?  @db.VarChar(100)
+  lokasi         String?  @db.VarChar(255)
+  urutan         Int      @default(0)
+  status         String   @default("aktif") @db.VarChar(20)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("fasilitas")
+}
+
+// ==================== DOKUMEN ====================
+model Dokumen {
+  id              Int      @id @default(autoincrement())
+  judulDokumen    String   @map("judul_dokumen") @db.VarChar(255)
+  deskripsi       String?  @db.Text
+  filePath        String   @map("file_path") @db.VarChar(500)
+  kategori        String?  @db.VarChar(100)
+  ukuranFile      Int      @map("ukuran_file")
+  tipeFile        String   @map("tipe_file") @db.VarChar(10)
+  jumlahDownload  Int      @default(0) @map("jumlah_download")
+  visibilitas     String   @default("publik") @db.VarChar(20)
+  status          String   @default("aktif") @db.VarChar(20)
+  createdBy       Int      @map("created_by")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  creator         User    @relation(fields: [createdBy], references: [id])
+
+  @@map("dokumen")
+}
+
+// ==================== PESAN MASUK ====================
+model PesanMasuk {
+  id             Int      @id @default(autoincrement())
+  namaPengirim   String   @map("nama_pengirim") @db.VarChar(255)
+  emailPengirim  String   @map("email_pengirim") @db.VarChar(255)
+  subjek         String   @db.VarChar(255)
+  pesan          String   @db.Text
+  isRead         Boolean  @default(false) @map("is_read")
+  ipAddress      String?  @map("ip_address") @db.VarChar(45)
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("pesan_masuk")
+}
+
+// ==================== PENGATURAN SITUS ====================
+model PengaturanSitus {
+  id        Int      @id @default(autoincrement())
+  kunci     String   @unique @db.VarChar(100)
+  nilai     String?  @db.Text
+  tipe      String   @default("text") @db.VarChar(20)
+  grup      String?  @db.VarChar(50)
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("pengaturan_situs")
+}

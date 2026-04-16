@@ -1,0 +1,293 @@
+.page {
+  min-height: 100vh;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  background:
+    linear-gradient(145deg, rgba(8, 28, 43, 0.78) 0%, rgba(9, 57, 84, 0.64) 45%, rgba(6, 69, 101, 0.78) 100%),
+    url('/images/dummy/ruang-kelas.png');
+  background-size: cover;
+  background-position: center;
+  padding: clamp(32px, 6vw, 76px) 24px clamp(60px, 8vw, 104px);
+  text-align: center;
+  color: #fff;
+}
+
+.hero .eyebrow {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(4px);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  color: #BAE6FD;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 5.6vw, 56px);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 8px 22px rgba(4, 14, 24, 0.5);
+  margin-bottom: 12px;
+  letter-spacing: -.02em;
+}
+
+.hero > p:last-child {
+  font-size: clamp(17px, 2.3vw, 21px);
+  color: #dbeafe;
+  text-shadow: 0 5px 14px rgba(4, 14, 24, 0.45);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Section */
+.section {
+  padding: clamp(48px, 6vw, 80px) 24px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-neutral-900);
+  margin-bottom: 48px;
+  letter-spacing: -.01em;
+}
+
+/* Two column */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.contentBlock h2 {
+  font-size: var(--text-2xl);
+  margin-bottom: 16px;
+  color: var(--color-neutral-900);
+}
+
+.contentBlock p {
+  margin-bottom: 16px;
+  line-height: 1.8;
+  color: var(--color-neutral-600);
+}
+
+.highlightCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.highlightItem {
+  background: linear-gradient(135deg, var(--color-primary-50), #fff);
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  text-align: center;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.highlightItem:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.highlightItem strong {
+  display: block;
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  color: var(--color-primary-700);
+  margin-bottom: 4px;
+}
+
+.highlightItem span {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-500);
+}
+
+/* Visi Misi */
+.visiMisi {
+  background: var(--color-neutral-100);
+}
+
+.vmGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.vmCard {
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  padding: clamp(28px, 3vw, 40px);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-neutral-200);
+  transition: transform .25s, box-shadow .25s;
+}
+
+.vmCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.vmIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+}
+
+.vmCard h3 {
+  font-size: var(--text-xl);
+  margin-bottom: 12px;
+  color: var(--color-neutral-900);
+}
+
+.vmCard p {
+  color: var(--color-neutral-600);
+  line-height: 1.8;
+}
+
+.vmCard ol {
+  padding-left: 20px;
+  color: var(--color-neutral-600);
+  line-height: 1.9;
+}
+
+.vmCard ol li {
+  margin-bottom: 8px;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--color-primary-300), var(--color-primary-600));
+  border-radius: 99px;
+}
+
+.timelineItem {
+  position: relative;
+  margin-bottom: 36px;
+  padding-left: 20px;
+}
+
+.timelineItem::before {
+  content: '';
+  position: absolute;
+  left: -30px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary-500);
+  border: 3px solid var(--color-white);
+  box-shadow: 0 0 0 3px var(--color-primary-200);
+}
+
+.timelineYear {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-primary-600);
+  margin-bottom: 4px;
+}
+
+.timelineContent h4 {
+  font-size: var(--text-lg);
+  color: var(--color-neutral-900);
+  margin-bottom: 4px;
+}
+
+.timelineContent p {
+  color: var(--color-neutral-500);
+  line-height: 1.7;
+}
+
+/* Legalitas */
+.legalGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.legalCard {
+  padding: 28px 24px;
+  background: var(--color-white);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  transition: transform .2s, box-shadow .2s;
+}
+.legalCard:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+.legalIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+}
+
+.legalCard h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  margin-bottom: 8px;
+}
+
+.legalCard p {
+  font-size: var(--text-sm);
+  color: var(--color-neutral-500);
+  line-height: 1.7;
+}
+
+/* CTA */
+.ctaSection {
+  padding: clamp(48px, 6vw, 80px) 24px;
+  background: linear-gradient(135deg, #0C4A6E, #075985 40%, #0369A1);
+  text-align: center;
+  color: #fff;
+}
+.ctaSection h2 { color: #fff; font-size: clamp(24px, 4vw, 38px); font-weight: 800; margin-bottom: 12px; }
+.ctaSection p { color: #BAE6FD; font-size: var(--text-lg); margin-bottom: 28px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+.ctaActions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 768px) {
+  .twoCol { grid-template-columns: 1fr; }
+  .vmGrid { grid-template-columns: 1fr; }
+  .highlightCard { grid-template-columns: 1fr 1fr; }
+  .legalGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .highlightCard { grid-template-columns: 1fr; }
+}

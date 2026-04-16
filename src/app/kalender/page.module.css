@@ -1,0 +1,202 @@
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+}
+
+.hero {
+  background:
+    linear-gradient(145deg, rgba(8, 28, 44, 0.82) 0%, rgba(8, 52, 74, 0.65) 45%, rgba(4, 74, 95, 0.8) 100%),
+    url('/images/dummy/pramuka.png');
+  background-size: cover;
+  background-position: center;
+  color: #E0F2FE;
+  border-radius: 24px;
+  padding: clamp(10px, 1.8vw, 22px) clamp(20px, 4vw, 40px) clamp(22px, 4.2vw, 42px);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(56, 189, 248, 0.2), transparent 40%),
+    radial-gradient(circle at 12% 84%, rgba(14, 165, 233, 0.18), transparent 40%);
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #BAE6FD;
+  position: relative;
+}
+
+.hero h1 {
+  margin-top: 8px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1.1;
+  text-shadow: 0 10px 24px rgba(4, 14, 24, 0.55);
+  position: relative;
+}
+
+.hero p {
+  color: #dbeafe;
+  text-shadow: 0 5px 14px rgba(4, 14, 24, 0.45);
+  position: relative;
+}
+
+.timeline {
+  margin-top: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.eventCard {
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.08);
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  gap: 14px;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+}
+
+.eventCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(14, 165, 233, 0.22);
+  box-shadow: 0 12px 30px rgba(14, 165, 233, 0.1);
+}
+
+.dateBlock {
+  border: 2px solid #0ea5e9;
+  border-radius: 14px;
+  height: fit-content;
+  padding: 8px 6px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
+}
+
+.dateBlock strong {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  color: #0f172a;
+}
+
+.dateBlock span {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0369a1;
+  margin-top: 4px;
+}
+
+.content h2 {
+  margin-top: 10px;
+  font-size: 24px;
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.badge {
+  background: #E0F2FE;
+  color: #0369A1;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.timeLabel {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.location {
+  margin-top: 8px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.content p {
+  margin-top: 8px;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.content small {
+  display: inline-flex;
+  margin-top: 8px;
+  color: #64748b;
+}
+
+.emptyState {
+  padding: 30px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  text-align: center;
+}
+
+@media (max-width: 680px) {
+  .page {
+    padding: 24px 14px 48px;
+  }
+
+  .hero {
+    border-radius: 18px;
+    padding: 10px 16px 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(24px, 8vw, 34px);
+  }
+
+  .hero p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .eventCard {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .dateBlock {
+    width: 84px;
+  }
+
+  .content h2 {
+    font-size: 21px;
+  }
+
+  .topRow {
+    flex-wrap: wrap;
+  }
+
+  .content p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+}
