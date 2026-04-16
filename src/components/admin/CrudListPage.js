@@ -57,8 +57,8 @@ export default function CrudListPage({
       const response = await adminAPI.getList(resource, queryString);
       setItems(response.data || []);
       setPagination(response.pagination || null);
-    } catch {
-      toast.error('Gagal mengambil data');
+    } catch (error) {
+      toast.error(error?.message || 'Gagal mengambil data');
     } finally {
       setLoading(false);
     }
@@ -76,8 +76,8 @@ export default function CrudListPage({
       toast.success('Data berhasil dihapus');
       setDeleteId(null);
       loadData();
-    } catch {
-      toast.error('Gagal menghapus data');
+    } catch (error) {
+      toast.error(error?.message || 'Gagal menghapus data');
     }
   };
 

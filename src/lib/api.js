@@ -1,4 +1,5 @@
 const API_BASE = '/api';
+const ADMIN_TIMEOUT_MS = 7000;
 
 async function fetchAPI(endpoint, options = {}) {
   const { timeoutMs = 0, ...restOptions } = options;
@@ -26,16 +27,20 @@ async function fetchAPI(endpoint, options = {}) {
 
   try {
     const response = await fetch(url, config);
-    const data = await response.json();
+    const contentType = response.headers.get('content-type') || '';
+    const isJson = contentType.includes('application/json');
+    const data = isJson ? await response.json() : null;
 
     if (!response.ok) {
+      const fallbackMessage = data?.message || `Request gagal (${response.status})`;
       throw {
         status: response.status,
-        ...data.error,
+        ...(data?.error || {}),
+        message: data?.error?.message || fallbackMessage,
       };
     }
 
-    return data;
+    return data ?? { success: true, data: null };
   } catch (error) {
     if (error?.name === 'AbortError') {
       throw {
@@ -51,44 +56,45 @@ async function fetchAPI(endpoint, options = {}) {
 }
 
 const fastPublicGet = (endpoint) => fetchAPI(endpoint, { timeoutMs: 1500 });
+const adminRequest = (endpoint, options = {}) => fetchAPI(endpoint, { timeoutMs: ADMIN_TIMEOUT_MS, ...options });
 
 // Admin API helpers
 export const adminAPI = {
   // Auth
-  login: (body) => fetchAPI('/auth/login', { method: 'POST', body: JSON.stringify(body) }),
-  logout: () => fetchAPI('/auth/logout', { method: 'POST' }),
-  me: () => fetchAPI('/auth/me'),
+  login: (body) => adminRequest('/auth/login', { method: 'POST', body: JSON.stringify(body) }),
+  logout: () => adminRequest('/auth/logout', { method: 'POST' }),
+  me: () => adminRequest('/auth/me'),
 
   // Dashboard
-  dashboard: () => fetchAPI('/admin/dashboard'),
+  dashboard: () => adminRequest('/admin/dashboard'),
 
   // Generic CRUD
-  getList: (resource, params = '') => fetchAPI(`/admin/${resource}?${params}`),
-  getOne: (resource, id) => fetchAPI(`/admin/${resource}/${id}`),
+  getList: (resource, params = '') => adminRequest(`/admin/${resource}${params ? `?${params}` : ''}`),
+  getOne: (resource, id) => adminRequest(`/admin/${resource}/${id}`),
   create: (resource, body) => {
     if (body instanceof FormData) {
-      return fetchAPI(`/admin/${resource}`, { method: 'POST', body });
+      return adminRequest(`/admin/${resource}`, { method: 'POST', body });
     }
-    return fetchAPI(`/admin/${resource}`, { method: 'POST', body: JSON.stringify(body) });
+    return adminRequest(`/admin/${resource}`, { method: 'POST', body: JSON.stringify(body) });
   },
   update: (resource, id, body) => {
     if (body instanceof FormData) {
-      return fetchAPI(`/admin/${resource}/${id}`, { method: 'PUT', body });
+      return adminRequest(`/admin/${resource}/${id}`, { method: 'PUT', body });
     }
-    return fetchAPI(`/admin/${resource}/${id}`, { method: 'PUT', body: JSON.stringify(body) });
+    return adminRequest(`/admin/${resource}/${id}`, { method: 'PUT', body: JSON.stringify(body) });
   },
-  delete: (resource, id) => fetchAPI(`/admin/${resource}/${id}`, { method: 'DELETE' }),
+  delete: (resource, id) => adminRequest(`/admin/${resource}/${id}`, { method: 'DELETE' }),
   upload: ({ file, folder = 'umum', maxWidth, quality }) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('folder', folder);
     if (maxWidth) formData.append('max_width', String(maxWidth));
     if (quality) formData.append('quality', String(quality));
-    return fetchAPI('/admin/upload', { method: 'POST', body: formData });
+    return adminRequest('/admin/upload', { method: 'POST', body: formData });
   },
 
   // Spesifik
-  markMessageRead: (id) => fetchAPI(`/admin/pesan/${id}/read`, { method: 'PATCH', body: JSON.stringify({ isRead: true }) }),
+  markMessageRead: (id) => adminRequest(`/admin/pesan/${id}`, { method: 'PATCH', body: JSON.stringify({ isRead: true }) }),
 };
 
 // Public API helpers

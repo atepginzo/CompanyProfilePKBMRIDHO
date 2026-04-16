@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifyToken, getTokenFromRequest } from './auth';
-import prisma from './prisma';
+import { checkDatabaseConnection } from './prisma';
 
 export async function withAuth(request) {
   const token = getTokenFromRequest(request);
@@ -21,6 +21,23 @@ export async function withAuth(request) {
       error: NextResponse.json(
         { success: false, error: { code: 'INVALID_TOKEN', message: 'Token tidak valid atau sudah kedaluwarsa' } },
         { status: 401 }
+      ),
+      user: null,
+    };
+  }
+
+  const dbReady = await checkDatabaseConnection();
+  if (!dbReady) {
+    return {
+      error: NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: 'DATABASE_UNAVAILABLE',
+            message: 'Database belum aktif atau tidak dapat dijangkau. Jalankan PostgreSQL lalu coba lagi.',
+          },
+        },
+        { status: 503 }
       ),
       user: null,
     };
